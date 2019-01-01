@@ -2,8 +2,12 @@ import React, { Component } from 'react'
 import Clarifai from 'clarifai'
 import Button from 'components/Button'
 import Form from 'components/Form'
-import { FormContainer, InputContainer } from './styled'
-import { colors } from 'styles/palette'
+import {
+  FormContainer,
+  InputContainer,
+  ImageContainer,
+  BoundingBox
+} from './styled'
 
 const app = new Clarifai.App({
   apiKey: process.env.REACT_APP_CLARIFAI_API
@@ -15,12 +19,7 @@ class FaceDetect extends Component {
     inputValue: '',
     imgWidth: '',
     imgHeight: '',
-    boundingBox: {
-      height: 0,
-      width: 0,
-      positionTop: 0,
-      positionLeft: 0
-    }
+    boundingBoxes: []
   }
 
   constructor(props) {
@@ -31,22 +30,29 @@ class FaceDetect extends Component {
   }
 
   onImageLoad = ({ target: img }) => {
-    this.setState({ imgWidth: img.offsetWidth, imgHeight: img.offsetHeight })
-    this.processToClarifai()
+    this.setState(
+      { imgWidth: img.offsetWidth, imgHeight: img.offsetHeight },
+      this.processToClarifai()
+    )
   }
 
-  calculateFacePositions = boundingBox => {
-    const { top_row, left_col, bottom_row, right_col } = boundingBox
+  calculateFacePositions = faces => {
     const { imgWidth, imgHeight } = this.state
 
-    const boxDimensions = {
-      height: (bottom_row - top_row) * imgHeight,
-      width: (right_col - left_col) * imgWidth,
-      positionTop: top_row * 100,
-      positionLeft: left_col * 100
-    }
+    const boundingBoxes = faces.map((face, index) => {
+      const { top_row, left_col, bottom_row, right_col } = face
 
-    this.setState({ boundingBox: boxDimensions })
+      const boxDimensions = {
+        height: (bottom_row - top_row) * imgHeight,
+        width: (right_col - left_col) * imgWidth,
+        positionTop: top_row * 100,
+        positionLeft: left_col * 100
+      }
+
+      return boxDimensions
+    })
+
+    this.setState({ boundingBoxes: boundingBoxes })
   }
 
   processToClarifai = () => {
@@ -54,9 +60,13 @@ class FaceDetect extends Component {
       .predict('a403429f2ddf4b49b307e318f00e528b', this.state.inputValue)
       .then(
         response => {
-          const boundingBox =
-            response.outputs[0].data.regions[0].region_info.bounding_box
-          this.calculateFacePositions(boundingBox)
+          const results = response.outputs[0].data.regions
+
+          const faces = results.map(
+            (result, index) => result.region_info.bounding_box
+          )
+
+          this.calculateFacePositions(faces)
         },
         err => {
           console.log('failed to retrieve data from Clarifai')
@@ -74,7 +84,7 @@ class FaceDetect extends Component {
 
   render() {
     const { onInputChange, onSubmit } = this
-    const { imageURL, boundingBox } = this.state
+    const { imageURL, boundingBoxes } = this.state
 
     return (
       <div
@@ -100,25 +110,26 @@ class FaceDetect extends Component {
           </InputContainer>
         </FormContainer>
         {imageURL && (
-          <div style={{ height: '60%', position: 'relative' }}>
+          <ImageContainer className="relative">
             <img
               src={imageURL}
               className="pa3"
               onLoad={this.onImageLoad}
               alt="to-detect"
-              style={{ maxHeight: '100%' }}
             />
-            <div
-              style={{
-                border: `2px solid ${colors.primary}`,
-                position: 'absolute',
-                height: boundingBox.height,
-                width: boundingBox.width,
-                top: `${boundingBox.positionTop}%`,
-                left: `${boundingBox.positionLeft}%`
-              }}
-            />
-          </div>
+            {boundingBoxes.map(
+              ({ height, width, positionTop, positionLeft }, index) => (
+                <BoundingBox
+                  key={index}
+                  className="absolute"
+                  height={`${height}px`}
+                  width={`${width}px`}
+                  top={`${positionTop}%`}
+                  left={`${positionLeft}%`}
+                />
+              )
+            )}
+          </ImageContainer>
         )}
       </div>
     )
