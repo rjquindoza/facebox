@@ -30,7 +30,7 @@ class FaceDetect extends Component {
 
   onImageLoad = ({ target: img }) => {
     this.setState(
-      { imgWidth: img.offsetWidth, imgHeight: img.offsetHeight, isLoading: true },
+      { imgWidth: img.offsetWidth, imgHeight: img.offsetHeight },
       this.processToClarifai()
     )
   }
@@ -61,10 +61,10 @@ class FaceDetect extends Component {
 
         if (results) {
           const faces = results.map((result, index) => result.region_info.bounding_box)
-          this.setState({ noFaceFound: false, isLoading: false })
+          this.setState({ isLoading: false })
           this.calculateFacePositions(faces)
         } else {
-          this.setState({ noFaceFound: true, boundingBoxes: [], isLoading: false })
+          this.setState({ noFaceFound: true, isLoading: false })
         }
       },
       err => {
@@ -78,7 +78,12 @@ class FaceDetect extends Component {
   }
 
   onSubmit = () => {
-    this.setState({ imageURL: this.state.inputValue })
+    this.setState({
+      imageURL: this.state.inputValue,
+      noFaceFound: false,
+      isLoading: true,
+      boundingBoxes: []
+    })
   }
 
   render() {

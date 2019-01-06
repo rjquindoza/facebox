@@ -14,8 +14,8 @@ export const InputContainer = styled.div`
 `
 
 export const ImageContainer = styled.div`
-  width: 40%;
-  height: 60%;
+  width: 35%;
+  height: 55%;
   overflow: hidden;
 
   & > img {
