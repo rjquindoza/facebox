@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "176b4d9e3bc8ccb24049",
+    "revision": "791c70c5121c55fe3673",
     "url": "/facebox/static/css/main.de0369d6.chunk.css"
   },
   {
-    "revision": "176b4d9e3bc8ccb24049",
-    "url": "/facebox/static/js/main.176b4d9e.chunk.js"
+    "revision": "791c70c5121c55fe3673",
+    "url": "/facebox/static/js/main.791c70c5.chunk.js"
   },
   {
     "revision": "9bcca3d902a77d5e6b6d",
@@ -24,7 +24,7 @@ self.__precacheManifest = [
     "url": "/facebox/static/media/bg.c7a26c12.jpg"
   },
   {
-    "revision": "56cefcfff2976a08d0b29b5294f2412e",
+    "revision": "d1b69301e1b0fbcf6fb971aa26a80f68",
     "url": "/facebox/index.html"
   }
 ];
