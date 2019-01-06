@@ -8,7 +8,7 @@ const Container = styled.div`
   background-color: transparent;
   color: ${fonts.light};
   width: 100%;
-  position: absolute;
+  position: fixed;
 `
 
 const Brand = styled(Button)`

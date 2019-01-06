@@ -14,7 +14,19 @@ export const InputContainer = styled.div`
 `
 
 export const ImageContainer = styled.div`
+  width: 40%;
   height: 60%;
+  overflow: hidden;
+
+  & > img {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-height: 100%;
+    min-width: 100%;
+    transform: translate(-50%, -50%);
+  }
 `
 
 export const BoundingBox = styled.div`
@@ -23,4 +35,8 @@ export const BoundingBox = styled.div`
   width: ${props => (props.width ? props.width : 0)};
   top: ${props => (props.top ? props.top : 0)};
   left: ${props => (props.left ? props.left : 0)};
+`
+
+export const ErrorMsg = styled.div`
+  color: red;
 `

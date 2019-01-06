@@ -1,13 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import Clarifai from 'clarifai'
+import { RingLoader } from 'react-spinners'
 import Button from 'components/Button'
 import Form from 'components/Form'
-import {
-  FormContainer,
-  InputContainer,
-  ImageContainer,
-  BoundingBox
-} from './styled'
+import { colors } from 'styles/palette'
+import { FormContainer, InputContainer, ImageContainer, BoundingBox, ErrorMsg } from './styled'
 
 const app = new Clarifai.App({
   apiKey: process.env.REACT_APP_CLARIFAI_API
@@ -15,6 +12,8 @@ const app = new Clarifai.App({
 
 class FaceDetect extends Component {
   state = {
+    noFaceFound: false,
+    isLoading: true,
     imageURL: '',
     inputValue: '',
     imgWidth: '',
@@ -31,7 +30,7 @@ class FaceDetect extends Component {
 
   onImageLoad = ({ target: img }) => {
     this.setState(
-      { imgWidth: img.offsetWidth, imgHeight: img.offsetHeight },
+      { imgWidth: img.offsetWidth, imgHeight: img.offsetHeight, isLoading: true },
       this.processToClarifai()
     )
   }
@@ -56,22 +55,22 @@ class FaceDetect extends Component {
   }
 
   processToClarifai = () => {
-    app.models
-      .predict('a403429f2ddf4b49b307e318f00e528b', this.state.inputValue)
-      .then(
-        response => {
-          const results = response.outputs[0].data.regions
+    app.models.predict('a403429f2ddf4b49b307e318f00e528b', this.state.inputValue).then(
+      response => {
+        const results = response.outputs[0].data.regions
 
-          const faces = results.map(
-            (result, index) => result.region_info.bounding_box
-          )
-
+        if (results) {
+          const faces = results.map((result, index) => result.region_info.bounding_box)
+          this.setState({ noFaceFound: false, isLoading: false })
           this.calculateFacePositions(faces)
-        },
-        err => {
-          console.log('failed to retrieve data from Clarifai')
+        } else {
+          this.setState({ noFaceFound: true, boundingBoxes: [], isLoading: false })
         }
-      )
+      },
+      err => {
+        console.log('failed to retrieve data from Clarifai')
+      }
+    )
   }
 
   onInputChange = event => {
@@ -84,14 +83,11 @@ class FaceDetect extends Component {
 
   render() {
     const { onInputChange, onSubmit } = this
-    const { imageURL, boundingBoxes } = this.state
+    const { imageURL, boundingBoxes, noFaceFound, isLoading } = this.state
 
     return (
-      <div
-        className="flex flex-column justify-center items-center"
-        style={{ height: '100vh' }}
-      >
-        <FormContainer>
+      <div className="flex flex-column justify-center items-center" style={{ height: '100vh' }}>
+        <FormContainer className="mb2">
           <InputContainer className="flex items-start pt4 pb2 ph4">
             <Form.Input
               id="image"
@@ -99,26 +95,17 @@ class FaceDetect extends Component {
               placeholder="Image link"
               onChange={onInputChange}
             />
-            <Button
-              className="ml3"
-              size="small"
-              type="button"
-              onClick={onSubmit}
-            >
+            <Button className="ml3" size="small" type="button" onClick={onSubmit}>
               DETECT
             </Button>
           </InputContainer>
         </FormContainer>
         {imageURL && (
-          <ImageContainer className="relative">
-            <img
-              src={imageURL}
-              className="pa3"
-              onLoad={this.onImageLoad}
-              alt="to-detect"
-            />
-            {boundingBoxes.map(
-              ({ height, width, positionTop, positionLeft }, index) => (
+          <Fragment>
+            <RingLoader sizeUnit={'px'} size={50} color={colors.primary} loading={isLoading} />
+            <ImageContainer className="relative ma3">
+              <img src={imageURL} onLoad={this.onImageLoad} alt="to-detect" />
+              {boundingBoxes.map(({ height, width, positionTop, positionLeft }, index) => (
                 <BoundingBox
                   key={index}
                   className="absolute"
@@ -127,10 +114,11 @@ class FaceDetect extends Component {
                   top={`${positionTop}%`}
                   left={`${positionLeft}%`}
                 />
-              )
-            )}
-          </ImageContainer>
+              ))}
+            </ImageContainer>
+          </Fragment>
         )}
+        {noFaceFound && <ErrorMsg>No face found in your image</ErrorMsg>}
       </div>
     )
   }

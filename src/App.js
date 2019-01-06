@@ -8,12 +8,7 @@ import bg from 'assets/img/bg.jpg'
 
 const Container = styled.div`
   position: relative;
-  background: linear-gradient(
-      to right,
-      rgba(34, 36, 37, 0.6),
-      rgba(64, 66, 68, 0.6)
-    ),
-    url(${bg}) no-repeat fixed center;
+  background: linear-gradient(to right, rgba(34, 36, 37, 0.6), rgba(64, 66, 68, 0.6)), url(${bg}) no-repeat fixed center;
   background-size: cover;
 `
 
@@ -29,7 +24,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Container className="App">
+        <Container>
           <Header />
           <Route path="/" exact component={LoadIndex} />
           <Route path="/face-detect" exact component={LoadFaceDetect} />
