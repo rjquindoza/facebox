@@ -6,11 +6,10 @@ export const FormContainer = styled.div`
 `
 
 export const InputContainer = styled.div`
-  background: linear-gradient(45deg, ${colors.primary}, #5e227f);
+  background: linear-gradient(45deg, ${colors.primary}, ${colors.secondary});
   border-radius: 3px;
   box-shadow: 0 1rem 5rem rgba(#000, 0.5);
   width: 100%;
-  padding: 2rem;
 `
 
 export const ImageContainer = styled.div`

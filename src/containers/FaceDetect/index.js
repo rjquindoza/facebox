@@ -4,7 +4,13 @@ import { RingLoader } from 'react-spinners'
 import Button from 'components/Button'
 import Form from 'components/Form'
 import { colors } from 'styles/palette'
-import { FormContainer, InputContainer, ImageContainer, BoundingBox, ErrorMsg } from './styled'
+import {
+  FormContainer,
+  InputContainer,
+  ImageContainer,
+  BoundingBox,
+  ErrorMsg
+} from './styled'
 
 const app = new Clarifai.App({
   apiKey: process.env.REACT_APP_CLARIFAI_API
@@ -55,22 +61,26 @@ class FaceDetect extends Component {
   }
 
   processToClarifai = () => {
-    app.models.predict('a403429f2ddf4b49b307e318f00e528b', this.state.inputValue).then(
-      response => {
-        const results = response.outputs[0].data.regions
+    app.models
+      .predict('a403429f2ddf4b49b307e318f00e528b', this.state.inputValue)
+      .then(
+        response => {
+          const results = response.outputs[0].data.regions
 
-        if (results) {
-          const faces = results.map((result, index) => result.region_info.bounding_box)
-          this.setState({ isLoading: false })
-          this.calculateFacePositions(faces)
-        } else {
-          this.setState({ noFaceFound: true, isLoading: false })
+          if (results) {
+            const faces = results.map(
+              (result, index) => result.region_info.bounding_box
+            )
+            this.setState({ isLoading: false })
+            this.calculateFacePositions(faces)
+          } else {
+            this.setState({ noFaceFound: true, isLoading: false })
+          }
+        },
+        err => {
+          console.log('failed to retrieve data from Clarifai')
         }
-      },
-      err => {
-        console.log('failed to retrieve data from Clarifai')
-      }
-    )
+      )
   }
 
   onInputChange = event => {
@@ -91,7 +101,10 @@ class FaceDetect extends Component {
     const { imageURL, boundingBoxes, noFaceFound, isLoading } = this.state
 
     return (
-      <div className="flex flex-column justify-center items-center" style={{ height: '100vh' }}>
+      <div
+        className="flex flex-column justify-center items-center"
+        style={{ height: '100vh' }}
+      >
         <FormContainer className="mb2">
           <InputContainer className="flex items-start pt4 pb2 ph4">
             <Form.Input
@@ -100,26 +113,38 @@ class FaceDetect extends Component {
               placeholder="Image link"
               onChange={onInputChange}
             />
-            <Button className="ml3" size="small" type="button" onClick={onSubmit}>
+            <Button
+              className="ml3 fw4"
+              size="small"
+              type="button"
+              onClick={onSubmit}
+            >
               DETECT
             </Button>
           </InputContainer>
         </FormContainer>
         {imageURL && (
           <Fragment>
-            <RingLoader sizeUnit={'px'} size={50} color={colors.primary} loading={isLoading} />
+            <RingLoader
+              sizeUnit={'px'}
+              size={50}
+              color={colors.primary}
+              loading={isLoading}
+            />
             <ImageContainer className="relative ma3">
               <img src={imageURL} onLoad={this.onImageLoad} alt="to-detect" />
-              {boundingBoxes.map(({ height, width, positionTop, positionLeft }, index) => (
-                <BoundingBox
-                  key={index}
-                  className="absolute"
-                  height={`${height}px`}
-                  width={`${width}px`}
-                  top={`${positionTop}%`}
-                  left={`${positionLeft}%`}
-                />
-              ))}
+              {boundingBoxes.map(
+                ({ height, width, positionTop, positionLeft }, index) => (
+                  <BoundingBox
+                    key={index}
+                    className="absolute"
+                    height={`${height}px`}
+                    width={`${width}px`}
+                    top={`${positionTop}%`}
+                    left={`${positionLeft}%`}
+                  />
+                )
+              )}
             </ImageContainer>
           </Fragment>
         )}

@@ -14,19 +14,24 @@ const Home = () => (
   <Container className="flex flex-column" style={{ color: fonts.light }}>
     <Heading>
       <Heading.H1 className="flex flex-column pa2 ma0">
-        <span>MACHINE</span>
-        <span>LEARNING</span>
-        <span>UNLEASHED</span>
+        <span>CLARIFAI</span>
+        <span>SOLUTIONS</span>
       </Heading.H1>
       <Heading.Divider className="mh2 mv3" />
       <div className="pa2">
         <Heading.H2>
-          Class-leading computer vision AI platform building solutions for your
-          business or personal use.
+          <span>
+            The leading computer vision AI platform for real-world business
+            problems.
+          </span>
+          <span>
+            The problems that your business encounters don’t change very often.
+            The way you can solve those problems just has, with Clarifai.
+          </span>
         </Heading.H2>
       </div>
-      <Link to="/how-it-works">
-        <Button className="ma2 b">LEARN MORE</Button>
+      <Link to="/face-detect">
+        <Button className="ma2 b">DEMO</Button>
       </Link>
     </Heading>
   </Container>

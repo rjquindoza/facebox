@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import cx from 'classnames'
-import { colors, fonts } from 'styles/palette'
+import { colors } from 'styles/palette'
 
 const StyledBtn = styled.button`
   background-color: ${colors.primary};
   border: 0;
   border-radius: 2px;
-  color: ${fonts.light};
+  color: inherit;
   cursor: pointer;
   font-size: 1rem;
   padding: 1.2rem 4rem;
@@ -54,7 +54,7 @@ const Button = ({ children, className, color, size, ...rest }) => {
 Button.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  color: PropTypes.oneOf(['transparent']),
+  color: PropTypes.oneOf(['transparent', 'primary', 'secondary']),
   size: PropTypes.oneOf(['small'])
 }
 

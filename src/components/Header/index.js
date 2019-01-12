@@ -21,7 +21,7 @@ const Brand = styled(Button)`
 const Header = () => (
   <nav>
     <Container className="flex justify-between items-center ph5">
-      <Link to="/">
+      <Link to="/facebox">
         <Brand className="pa3 transparent" size="small">
           <h1 className="ma0">FACE-BOX</h1>
         </Brand>
@@ -44,9 +44,7 @@ const Header = () => (
           </li>
           <li className="pa3">
             <Link to="/sign-up">
-              <Button color="transparent" size="small">
-                Sign up
-              </Button>
+              <Button size="small">Sign up</Button>
             </Link>
           </li>
         </ul>

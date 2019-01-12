@@ -1,10 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { fonts } from 'styles/palette'
 
 const InputStyled = styled.input`
   background: none;
-  border: 1px solid ${fonts.light};
+  border: 1px solid #000;
   border-radius: 3px;
   display: block;
   padding: 0.5rem 0.5rem;
@@ -26,7 +25,7 @@ const InputStyled = styled.input`
 `
 
 const Label = styled.label`
-  color: #a9a9a9;
+  color: #000;
   cursor: text;
   font-size: 0.9rem;
   font-weight: 400;
