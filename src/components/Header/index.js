@@ -20,7 +20,7 @@ const Brand = styled(Button)`
 const Header = ({ isLoggedIn, user, handleSignOut }) => (
   <nav className="pv3">
     <Container className="flex justify-between items-center ph5">
-      <Link to="/facebox">
+      <Link to="/">
         <Brand className="pa3 transparent" size="small">
           <h1 className="ma0">FACE-BOX</h1>
         </Brand>

@@ -91,7 +91,7 @@ class App extends Component {
               user={user}
               handleSignOut={this.handleSignOut}
             />
-            <Route path="/facebox" exact component={LoadIndex} />
+            <Route path="/" exact component={LoadIndex} />
             <Route path="/how-it-works" exact component={LoadHowItWorks} />
             <Route path="/sign-in" component={LoadSignIn} />
             <Route path="/register" exact component={LoadRegister} />
