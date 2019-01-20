@@ -103,7 +103,7 @@ class FaceDetect extends Component {
     return (
       <div
         className="flex flex-column justify-center items-center"
-        style={{ height: '100vh' }}
+        style={{ height: '90%' }}
       >
         <FormContainer className="mb2">
           <InputContainer className="flex items-start pt4 pb2 ph4">

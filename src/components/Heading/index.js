@@ -5,7 +5,6 @@ import { fonts } from 'styles/palette'
 
 const Container = styled.div`
   color: inherit;
-  height: 100vh;
 `
 
 const H1 = styled.h1`

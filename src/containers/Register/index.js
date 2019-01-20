@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import { RingLoader } from 'react-spinners'
 
@@ -21,24 +21,21 @@ const Title = styled.h2`
   font-size: 2rem;
 `
 
-class SignIn extends Component {
+class Register extends Component {
   state = {
     isLoggedIn: false,
-    redirectToReferrer: false,
     isLoading: false,
+    name: '',
     username: '',
     password: ''
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      ...this.state
-    }
-  }
-
   onUsernameChange = e => {
     this.setState({ username: e.target.value })
+  }
+
+  onNameChange = e => {
+    this.setState({ name: e.target.value })
   }
 
   onPasswordChange = e => {
@@ -46,13 +43,14 @@ class SignIn extends Component {
   }
 
   onSubmit = (handleLogin, loadUser) => {
-    const { username, password } = this.state
+    const { username, name, password } = this.state
     this.setState({ isLoading: true })
 
-    fetch(`${API.URL}/sign-in`, {
+    fetch(`${API.URL}/register`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        name,
         username,
         password
       })
@@ -104,7 +102,17 @@ class SignIn extends Component {
                 />
               </div>
               <FormContainer className="center flex flex-column justify-around pv3 ph4 br2 shadow-5">
-                <Title>Sign In</Title>
+                <Title>Sign Up</Title>
+                <div className="mb1">
+                  <Form.Input
+                    onChange={this.onNameChange}
+                    id="name"
+                    name="name"
+                    label="Name"
+                    placeholder="Name"
+                    type="text"
+                  />
+                </div>
                 <div className="mb1">
                   <Form.Input
                     onChange={this.onUsernameChange}
@@ -119,27 +127,20 @@ class SignIn extends Component {
                   <Form.Input
                     onChange={this.onPasswordChange}
                     id="password"
-                    name="current-password"
+                    name="password"
                     label="Password"
                     placeholder="Password"
                     type="password"
                   />
                 </div>
-                <div className="flex justify-between">
-                  <Link to="/register">
-                    <Button className="self-end" size="small" color="secondary">
-                      Register
-                    </Button>
-                  </Link>
-                  <Button
-                    onClick={() => this.onSubmit(handleLogin, loadUser)}
-                    className="self-end"
-                    size="small"
-                    color="secondary"
-                  >
-                    Sign-in
-                  </Button>
-                </div>
+                <Button
+                  onClick={() => this.onSubmit(handleLogin, loadUser)}
+                  className="self-end"
+                  size="small"
+                  color="secondary"
+                >
+                  Register
+                </Button>
               </FormContainer>
             </Container>
           )
@@ -149,4 +150,4 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn
+export default Register

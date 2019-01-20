@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Button from 'components/Button'
@@ -8,7 +8,6 @@ const Container = styled.div`
   background-color: transparent;
   color: ${fonts.light};
   width: 100%;
-  position: fixed;
 `
 
 const Brand = styled(Button)`
@@ -18,8 +17,8 @@ const Brand = styled(Button)`
   }
 `
 
-const Header = () => (
-  <nav>
+const Header = ({ isLoggedIn, user, handleSignOut }) => (
+  <nav className="pv3">
     <Container className="flex justify-between items-center ph5">
       <Link to="/facebox">
         <Brand className="pa3 transparent" size="small">
@@ -28,25 +27,49 @@ const Header = () => (
       </Link>
       <div>
         <ul className="flex list pa0">
-          <li className="pa3">
-            <Link to="/how-it-works">
-              <Button color="transparent" size="small">
-                How it works
-              </Button>
-            </Link>
-          </li>
-          <li className="pa3">
-            <Link to="/sign-in">
-              <Button color="transparent" size="small">
-                Sign in
-              </Button>
-            </Link>
-          </li>
-          <li className="pa3">
-            <Link to="/sign-up">
-              <Button size="small">Sign up</Button>
-            </Link>
-          </li>
+          {isLoggedIn ? (
+            <Fragment>
+              <li className="">
+                <Button color="transparent" size="small">
+                  Hello, &nbsp;
+                  {user.name}
+                </Button>
+              </li>
+              <li className="">
+                <Link to="/sign-in">
+                  <Button
+                    onClick={handleSignOut}
+                    color="transparent"
+                    size="small"
+                  >
+                    Sign out
+                  </Button>
+                </Link>
+              </li>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <li className="pr2">
+                <Link to="/how-it-works">
+                  <Button color="transparent" size="small">
+                    How it works
+                  </Button>
+                </Link>
+              </li>
+              <li className="mr3">
+                <Link to="/sign-in">
+                  <Button color="transparent" size="small">
+                    Sign in
+                  </Button>
+                </Link>
+              </li>
+              <li className="">
+                <Link to="/register">
+                  <Button size="small">Sign up</Button>
+                </Link>
+              </li>
+            </Fragment>
+          )}
         </ul>
       </div>
     </Container>

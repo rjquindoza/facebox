@@ -6,12 +6,13 @@ import Button from 'components/Button'
 import Heading from 'components/Heading'
 import { fonts } from 'styles/palette'
 
-const Container = styled.div`
-  height: 100vh;
-`
+const Container = styled.div``
 
 const Home = () => (
-  <Container className="flex flex-column" style={{ color: fonts.light }}>
+  <Container
+    className="absolute flex flex-column"
+    style={{ color: fonts.light, top: '50%', transform: 'translateY(-50%)' }}
+  >
     <Heading>
       <Heading.H1 className="flex flex-column pa2 ma0">
         <span>CLARIFAI</span>

@@ -26,7 +26,7 @@ const StyledBtn = styled.button`
 
   &:hover {
     box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.5);
-    opacity: 0.9;
+    opacity: 0.8;
   }
 
   &.small {
@@ -35,6 +35,14 @@ const StyledBtn = styled.button`
 
   &.transparent {
     background: transparent;
+    &:hover {
+      box-shadow: none;
+      opacity: 0.8;
+    }
+  }
+
+  &.secondary {
+    background: ${colors.secondary};
   }
 `
 
@@ -42,6 +50,7 @@ const Button = ({ children, className, color, size, ...rest }) => {
   const classes = cx(
     className,
     color === 'transparent' ? 'transparent' : '',
+    color === 'secondary' ? 'secondary' : '',
     size === 'small' ? 'small' : ''
   )
   return (
