@@ -1,16 +1,16 @@
 {
   "main.css": "/facebox/static/css/main.de0369d6.chunk.css",
-  "main.js": "/facebox/static/js/main.6a9de302.chunk.js",
-  "main.js.map": "/facebox/static/js/main.6a9de302.chunk.js.map",
+  "main.js": "/facebox/static/js/main.17defc0c.chunk.js",
+  "main.js.map": "/facebox/static/js/main.17defc0c.chunk.js.map",
   "static/css/1.c7ddfe99.chunk.css": "/facebox/static/css/1.c7ddfe99.chunk.css",
-  "static/js/1.b38fe7a2.chunk.js": "/facebox/static/js/1.b38fe7a2.chunk.js",
-  "static/js/1.b38fe7a2.chunk.js.map": "/facebox/static/js/1.b38fe7a2.chunk.js.map",
+  "static/js/1.732d8f4a.chunk.js": "/facebox/static/js/1.732d8f4a.chunk.js",
+  "static/js/1.732d8f4a.chunk.js.map": "/facebox/static/js/1.732d8f4a.chunk.js.map",
   "runtime~main.js": "/facebox/static/js/runtime~main.96b7ed2c.js",
   "runtime~main.js.map": "/facebox/static/js/runtime~main.96b7ed2c.js.map",
   "static/media/bg.jpg": "/facebox/static/media/bg.c631f5d4.jpg",
   "static/css/main.de0369d6.chunk.css.map": "/facebox/static/css/main.de0369d6.chunk.css.map",
   "static/css/1.c7ddfe99.chunk.css.map": "/facebox/static/css/1.c7ddfe99.chunk.css.map",
   "index.html": "/facebox/index.html",
-  "precache-manifest.d2afdb806f851a19e1fc068f1675d636.js": "/facebox/precache-manifest.d2afdb806f851a19e1fc068f1675d636.js",
+  "precache-manifest.d66f90b8f41219a479eda7f3695a0fad.js": "/facebox/precache-manifest.d66f90b8f41219a479eda7f3695a0fad.js",
   "service-worker.js": "/facebox/service-worker.js"
 }
